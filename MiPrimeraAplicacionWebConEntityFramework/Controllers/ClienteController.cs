@@ -50,12 +50,16 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
             ViewBag.lista = listaSexo;
             return View();
         }
+        // ViewBag.lista-> permite pasar datos de la controller a la lista
+
 
         [HttpPost]
         public ActionResult Agregar(ClienteCLS oClienteCLS)
         {
             if (!ModelState.IsValid)
             {
+                llenarSexo();
+                ViewBag.lista = listaSexo;
                 return View(oClienteCLS);
             }
             using (var bd = new BDPasajeEntities())
@@ -65,7 +69,6 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
                 oCliente.APPATERNO = oClienteCLS.apPaterno;
                 oCliente.APMATERNO = oClienteCLS.apMaterno;
                 oCliente.EMAIL = oClienteCLS.email;
-                oCliente.DIRECCION = oClienteCLS.direccion;
                 oCliente.DIRECCION = oClienteCLS.direccion;
                 oCliente.IIDSEXO = oClienteCLS.iidsexo;
                 oCliente.TELEFONOFIJO = oClienteCLS.telefonoFijo;
