@@ -10,27 +10,28 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Models
     {
         [Display(Name ="Id Empleado")]
         [Required]
+        [StringLength(100,ErrorMessage ="Longitud maxima 100")]
         public int iidEmpleado { get; set; }
 
         [Display(Name = "Nombre")]
-        [StringLength(100,ErrorMessage ="Longitud maxima 100")]
         [Required]
+        [StringLength(200, ErrorMessage = "Longitud maxima 200")]
         public string nombre { get; set; }
 
         [Display(Name = "Apellido Paterno")]
-        [StringLength(200, ErrorMessage = "Longitud maxima 200")]
         [Required]
+        [StringLength(200, ErrorMessage = "Longitud maxima 200")]
         public string apPaterno { get; set; }
 
         [Display(Name = "Apellido Materno")]
-        [StringLength(200, ErrorMessage = "Longitud maxima 200")]
-        [Required]
+        [Required]  
+        [StringLength(100, ErrorMessage = "Longitud maxima 100")]
         public string apMaterno { get; set; }
 
         [Display(Name = "Fecha de Contrato")]
+        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Required]
         public DateTime fechaContrato { get; set; }
 
         [Display(Name = "Tipo de Usuario")]
@@ -46,9 +47,12 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Models
         public int iidSexo { get; set; }
         public int bhabilitado { get; set; }
 
-        // Propiedad adicionales
+        // Propiedades adicionales
 
+        [Display(Name ="Tipo Contrato")]
         public string nombreTipoContrato { get; set; }
+
+        [Display(Name = "Tipo Usuario")]
         public string nombreTipoUsuario { get; set; }
     }
 }

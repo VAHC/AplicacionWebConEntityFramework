@@ -12,13 +12,14 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         public ActionResult Index()
         {
             List<EmpleadoCLS> listaEmpleado = null;
-            using (var bd=new BDPasajeEntities())
+            using(var bd=new BDPasajeEntities())
             {
                 listaEmpleado = (from empleado in bd.Empleado
                                  join tipoUsuario in bd.TipoUsuario
                                  on empleado.IIDTIPOUSUARIO equals tipoUsuario.IIDTIPOUSUARIO
                                  join tipoContrato in bd.TipoContrato
                                  on empleado.IIDTIPOCONTRATO equals tipoContrato.IIDTIPOCONTRATO
+                                 where empleado.BHABILITADO == 1
                                  select new EmpleadoCLS
                                  {
                                      iidEmpleado = empleado.IIDEMPLEADO,
@@ -28,8 +29,7 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
                                      nombreTipoContrato = tipoContrato.NOMBRE
                                  }).ToList();
             }
-
-                return View();
+            return View(listaEmpleado);
         }
     }
 }

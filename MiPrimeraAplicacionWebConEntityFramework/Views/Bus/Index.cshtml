@@ -1,0 +1,28 @@
+﻿@using MiPrimeraAplicacionWebConEntityFramework.Models
+@model List<BusCLS>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <td>@Html.LabelFor(p=>Model[0].iidBus)</td>
+        <td>@Html.LabelFor(p => Model[0].placa)</td>
+        <td>@Html.LabelFor(p => Model[0].nombreModelo)</td>
+        <td>@Html.LabelFor(p => Model[0].nombreSucursal)</td>
+        <td>@Html.LabelFor(p => Model[0].nombreTipoBus)</td>
+    </tr>
+    @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.iidBus</td>
+                    <td>@item.placa</td>
+                    <td>@item.nombreModelo</td>
+                    <td>@item.nombreSucursal</td>
+                    <td>@item.nombreTipoBus</td>
+                </tr>
+            }
+
+</table>
