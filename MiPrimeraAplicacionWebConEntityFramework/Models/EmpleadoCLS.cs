@@ -8,9 +8,7 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Models
 {
     public class EmpleadoCLS
     {
-        [Display(Name ="Id Empleado")]
-        [Required]
-        [StringLength(100,ErrorMessage ="Longitud maxima 100")]
+        [Display(Name ="Id Empleado")]        
         public int iidEmpleado { get; set; }
 
         [Display(Name = "Nombre")]
@@ -45,7 +43,13 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Models
         [Display(Name = "Sexo")]
         [Required]
         public int iidSexo { get; set; }
+
         public int bhabilitado { get; set; }
+
+        [Display(Name ="Sueldo")]
+        [Required]
+        [Range(0,100000,ErrorMessage ="Fuera de rango")]
+        public decimal sueldo { get; set; }
 
         // Propiedades adicionales
 
