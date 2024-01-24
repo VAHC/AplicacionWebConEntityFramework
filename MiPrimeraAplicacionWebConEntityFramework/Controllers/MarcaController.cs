@@ -30,6 +30,20 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         {
             return View();    
         }
+
+        public ActionResult Editar(int ed)
+        {
+            MarcaCLS oMarcaCLS = new MarcaCLS();
+            using(var bd=new BDPasajeEntities())
+            {
+                Marca oMarca = bd.Marca.Where(p => p.IIDMARCA.Equals(ed)).First();
+                oMarcaCLS.iidmarca = oMarca.IIDMARCA;
+                oMarcaCLS.nombre = oMarca.NOMBRE;
+                oMarcaCLS.descripcion = oMarca.DESCRIPCION;
+            }
+            return View(oMarcaCLS);
+        }
+
         //Hace la inserción
         [HttpPost]
         public ActionResult Agregar(MarcaCLS oMarcaCLS)
@@ -53,6 +67,5 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
 
             return RedirectToAction("Index");
         }
-        
     }
 }

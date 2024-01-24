@@ -37,7 +37,7 @@
 
             <div>
                 @Html.LabelFor(p => p.direccion)
-                @Html.TextBoxFor(p => p.direccion, new { @class = "form-control" })
+                @Html.EditorFor(p => p.direccion, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessage("direccion", new { @class = "text-danger" })
             </div>
 

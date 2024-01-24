@@ -33,6 +33,7 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Models
         public string email { get; set; }
         
         [Display(Name ="Direccion")]
+        [DataType(DataType.MultilineText)]
         [StringLength(200, ErrorMessage = "Longitud maxima 200")]
         [Required]
         public string direccion { get; set; }
