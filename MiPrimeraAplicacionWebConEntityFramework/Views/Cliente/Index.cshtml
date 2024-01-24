@@ -17,6 +17,7 @@
             <td>@Html.LabelFor(p => Model[0].apPaterno)</td>
             <td>@Html.LabelFor(p => Model[0].apMaterno)</td>
             <td>@Html.LabelFor(p => Model[0].telefonoFijo)</td>
+            <td>Operaciones</td>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,10 @@
             <td>@item.apPaterno</td>
             <td>@item.apMaterno</td>
             <td>@item.telefonoFijo</td>
+            <td>
+                @Html.ActionLink(" ", "Editar", "Cliente", new { ad = @item.iidcliente }, new { @class = "glyphicon glyphicon-trash btn btn-primary" })
+                @Html.ActionLink(" ", "Eliminar", "Cliente", new { ad = @item.iidcliente }, new { @class = "glyphicon glyphicon-trash btn btn-danger" })
+            </td>
         </tr>
             }
     </tbody>

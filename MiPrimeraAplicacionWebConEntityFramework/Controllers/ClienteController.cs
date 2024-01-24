@@ -28,6 +28,29 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
             return View(listaCliente);
         }
 
+        public ActionResult Editar(int ad)
+        {
+            ClienteCLS oClienteCLS = new ClienteCLS();
+            using (var bd = new BDPasajeEntities())
+            {
+                llenarSexo();
+                ViewBag.lista = listaSexo;
+                
+                Cliente oCliente = bd.Cliente.Where(p => p.IIDCLIENTE.Equals(ad)).First();
+                
+                oClienteCLS.iidcliente = oCliente.IIDCLIENTE;
+                oClienteCLS.nombre = oCliente.NOMBRE;
+                oClienteCLS.apPaterno = oCliente.APPATERNO;
+                oClienteCLS.apMaterno = oCliente.APMATERNO;
+                oClienteCLS.direccion = oCliente.DIRECCION;
+                oClienteCLS.email = oCliente.EMAIL  ;
+                oClienteCLS.iidsexo = (int) oCliente.IIDSEXO;
+                oClienteCLS.telefonoCelular = oCliente.TELEFONOCELULAR;
+                oClienteCLS.telefonoFijo = oCliente.TELEFONOFIJO;
+            }
+            return View(oClienteCLS);
+        }
+
         List<SelectListItem> listaSexo;
 
         private void llenarSexo()
