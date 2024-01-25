@@ -30,8 +30,8 @@
             <td>@item.apMaterno</td>
             <td>@item.telefonoFijo</td>
             <td>
-                @Html.ActionLink(" ", "Editar", "Cliente", new { ad = @item.iidcliente }, new { @class = "glyphicon glyphicon-trash btn btn-primary" })
-                @Html.ActionLink(" ", "Eliminar", "Cliente", new { ad = @item.iidcliente }, new { @class = "glyphicon glyphicon-trash btn btn-danger" })
+                @Html.ActionLink("Editar", "Editar", "Cliente", new { ad = @item.iidcliente }, new { @class = "btn btn-primary" }) 
+                @Html.ActionLink("Eliminar", "Eliminar", "Cliente", new { ad = @item.iidcliente }, new { @class = "btn btn-danger" })
             </td>
         </tr>
             }

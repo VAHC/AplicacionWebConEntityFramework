@@ -27,8 +27,8 @@
             <td>@item.telefono</td>
             <td>@item.email</td>
             <td>
-                @Html.ActionLink(" ", "Editar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "glyphicon glyphicon-trash btn btn-primary" })
-                @Html.ActionLink(" ", "Eliminar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "glyphicon glyphicon-trash btn btn-danger" })
+                @Html.ActionLink("Editar", "Editar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Eliminar", "Eliminar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "btn btn-danger" })
             </td>
         </tr>
             }

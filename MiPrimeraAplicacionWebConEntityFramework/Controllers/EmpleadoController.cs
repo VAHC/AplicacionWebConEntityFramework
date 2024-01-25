@@ -125,5 +125,26 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult Editar(int od)
+        {
+            listarCombos();
+            EmpleadoCLS oEmpleadoCLS = new EmpleadoCLS();
+
+            using(var bd = new BDPasajeEntities())
+            {
+                Empleado oEmpleado = bd.Empleado.Where(p => p.IIDEMPLEADO.Equals(od)).First();
+                oEmpleadoCLS.iidEmpleado = oEmpleado.IIDEMPLEADO;
+                oEmpleadoCLS.nombre = oEmpleado.NOMBRE;
+                oEmpleadoCLS.apPaterno = oEmpleado.APPATERNO;
+                oEmpleadoCLS.apMaterno = oEmpleado.APMATERNO;
+                oEmpleadoCLS.fechaContrato = (DateTime) oEmpleado.FECHACONTRATO;
+                oEmpleadoCLS.sueldo = (decimal) oEmpleado.SUELDO;
+                oEmpleadoCLS.iidTipoUsuario = (int) oEmpleado.IIDTIPOUSUARIO;
+                oEmpleadoCLS.iidTipoContrato = (int) oEmpleado.IIDTIPOCONTRATO;
+                oEmpleadoCLS.iidSexo = (int) oEmpleado.IIDSEXO;
+            }
+            return View(oEmpleadoCLS);
+        }
     }
 }

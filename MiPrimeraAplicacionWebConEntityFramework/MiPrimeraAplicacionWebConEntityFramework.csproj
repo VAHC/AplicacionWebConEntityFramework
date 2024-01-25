@@ -281,6 +281,7 @@
     <Content Include="Views\Marca\Editar.cshtml" />
     <Content Include="Views\Sucursal\Editar.cshtml" />
     <Content Include="Views\Cliente\Editar.cshtml" />
+    <Content Include="Views\Empleado\Editar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
