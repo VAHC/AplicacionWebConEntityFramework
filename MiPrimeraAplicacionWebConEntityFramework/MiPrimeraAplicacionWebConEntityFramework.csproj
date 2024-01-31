@@ -282,6 +282,8 @@
     <Content Include="Views\Sucursal\Editar.cshtml" />
     <Content Include="Views\Cliente\Editar.cshtml" />
     <Content Include="Views\Empleado\Editar.cshtml" />
+    <Content Include="Views\Bus\Agregar.cshtml" />
+    <Content Include="Views\Bus\Editar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

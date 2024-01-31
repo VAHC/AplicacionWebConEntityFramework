@@ -6,6 +6,8 @@
 
 <h2>Index</h2>
 
+@Html.ActionLink("Agregar","Agregar","Bus", new{ @class="btn btn-primary"} )
+
 <table class="table table-bordered table-hover">
     <tr>
         <td>@Html.LabelFor(p=>Model[0].iidBus)</td>
@@ -13,6 +15,7 @@
         <td>@Html.LabelFor(p => Model[0].nombreModelo)</td>
         <td>@Html.LabelFor(p => Model[0].nombreSucursal)</td>
         <td>@Html.LabelFor(p => Model[0].nombreTipoBus)</td>
+        <td>Operaciones</td>
     </tr>
     @foreach(var item in Model)
             {
@@ -22,6 +25,10 @@
                     <td>@item.nombreModelo</td>
                     <td>@item.nombreSucursal</td>
                     <td>@item.nombreTipoBus</td>
+                    <td>
+                        @Html.ActionLink("Editar", "Editar", "Bus", new { id = @item.iidBus }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Eliminar", "Eliminar", "Bus", new { ad = @item.iidBus }, new { @class = "btn btn-danger" })
+                    </td>
                 </tr>
             }
 

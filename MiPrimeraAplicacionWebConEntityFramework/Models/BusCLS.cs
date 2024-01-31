@@ -34,11 +34,11 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Models
         [Required]
         public int iidModelo { get; set; }
 
-        [Display(Name = "Numero de Columnas")]
+        [Display(Name = "Numero de Filas")]
         [Required]
         public int numeroFilas { get; set; }
 
-        [Display(Name = "Numero de Filas ")]
+        [Display(Name = "Numero de Columnas")]
         [Required]
         public int numeroColumnas { get; set; }
         public int bdhabilitado { get; set; }
@@ -48,7 +48,7 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Models
         [StringLength(200, ErrorMessage = "Longitud maxima 200")]
         public string descripcion { get; set; }
 
-        [Display(Name = "Tipo de Bus")]
+        [Display(Name = "Observacion")]
         [StringLength(200, ErrorMessage ="Longitud maxima 200")]
         public string observacion { get; set; }
 
