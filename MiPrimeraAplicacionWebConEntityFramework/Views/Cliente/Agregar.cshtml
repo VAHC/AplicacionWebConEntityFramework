@@ -2,14 +2,14 @@
 @model ClienteCLS
 @{
     ViewBag.Title = "Agregar";
-    List<SelectListItem> listaSexo = (List<SelectListItem>) ViewBag.lista;
+    List<SelectListItem> listaSexo = (List<SelectListItem>)ViewBag.lista;
 }
 
 <h2>Agregar</h2>
 
 <div class="row">
     <div class="col-md-6">
-        @using (Html.BeginForm("Agregar", "Cliente", FormMethod.Post))
+        @using (Html.BeginForm("Agregar", "Cliente", FormMethod.Post, new { @id="frmCliente"}))
         {
             <div>
                 @Html.LabelFor(p => p.nombre)
@@ -43,7 +43,7 @@
 
             <div>
                 @Html.LabelFor(p => p.iidsexo)
-                @Html.DropDownList("iidsexo", listaSexo,null,new {@class="form-control"})
+                @Html.DropDownList("iidsexo", listaSexo, null, new { @class = "form-control" })
                 @Html.ValidationMessage("iidsexo", new { @class = "text-danger" })
             </div>
 
@@ -60,9 +60,38 @@
             </div>
 
             <div style="margin:auto">
-                <input type="submit" value="Enviar" class="btn btn-primary"/>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Guardar
+                </button>
+                @Html.ActionLink("Regresar", "Index", "Cliente", null, new { @class="btn btn-danger"})
             </div>
         }
     </div>
 
 </div>
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">¿Desea guardar los cambios?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div style="padding:1em">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="Agregar()" class="btn btn-info">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Agregar() {
+        var frmCliente = document.getElementById("frmCliente");
+        frmCliente.submit();
+    }
+</script>
