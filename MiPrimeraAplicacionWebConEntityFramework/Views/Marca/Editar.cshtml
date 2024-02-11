@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        @using (Html.BeginForm("Editar", "Marca", FormMethod.Post))
+        @using (Html.BeginForm("Editar", "Marca", FormMethod.Post, new { @id="frmEditar"}))
         {
             <div>
                 @Html.LabelFor(p => p.iidmarca)
@@ -30,7 +30,18 @@
             <br />
             <div style="margin:auto">
                 <input type="submit" class="btn btn-primary" value="Guardar" />
+                @Html.ActionLink("Regresar", "Index", "Marca", null, new {@class="btn btn-danger"})
             </div>
         }
     </div>
 </div>
+
+<script>
+    var frmEditar = document.getElementById("frmEditar");
+    frmEditar.onsubmit = function (e) {
+        e.preventDefault();
+        if (confirm("¿Deseas guardar los combios?") == 1) {
+            frmEditar.submit();
+        }
+    }
+</script>

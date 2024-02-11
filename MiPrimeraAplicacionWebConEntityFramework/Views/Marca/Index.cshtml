@@ -25,8 +25,8 @@
             <td>@item.nombre</td>
             <td>@item.descripcion</td>
             <td>
-                @Html.ActionLink("Editar", "Editar", "Marca", new { ed = @item.iidmarca }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Eliminar", "Eliminar", "Marca", new { ed = @item.iidmarca }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Editar", "Editar", "Marca", new { uf = @item.iidmarca }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Eliminar", "Eliminar", "Marca", new { uf = @item.iidmarca }, new { @class = "btn btn-danger" })
             </td>
         </tr>
         }
