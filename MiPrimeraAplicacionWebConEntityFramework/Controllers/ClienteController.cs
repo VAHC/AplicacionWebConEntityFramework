@@ -51,6 +51,33 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
             return View(oClienteCLS);
         }
 
+        [HttpPost]
+        public ActionResult Editar(ClienteCLS oClienteCLS)
+        {
+            int idCliente = oClienteCLS.iidcliente;
+
+            if (!ModelState.IsValid)
+            {
+                return View(oClienteCLS);
+            }
+
+            using(var bd=new BDPasajeEntities())
+            {
+                Cliente oCliente = bd.Cliente.Where(p => p.IIDCLIENTE.Equals(idCliente)).First();
+                oCliente.NOMBRE = oClienteCLS.nombre;
+                oCliente.APPATERNO = oClienteCLS.apPaterno;
+                oCliente.APMATERNO = oClienteCLS.apMaterno;
+                oCliente.DIRECCION = oClienteCLS.direccion;
+                oCliente.EMAIL = oClienteCLS.email;
+                oCliente.IIDSEXO = oClienteCLS.iidsexo;
+                oCliente.TELEFONOCELULAR = oClienteCLS.telefonoCelular;
+                oCliente.TELEFONOFIJO = oClienteCLS.telefonoFijo;
+
+                bd.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
         List<SelectListItem> listaSexo;
 
         private void llenarSexo()

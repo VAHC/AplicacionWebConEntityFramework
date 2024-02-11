@@ -12,8 +12,14 @@
 
 <div class="row">
     <div class="col-md-6">
-        @using (Html.BeginForm("Editar", "Empleado", FormMethod.Post))
+        @using (Html.BeginForm("Editar", "Empleado", FormMethod.Post,new { @id="frmEmpleado"}))
         {
+            <div>
+                @Html.LabelFor(p => p.iidEmpleado)
+                @Html.TextBoxFor(p => p.iidEmpleado, new { @class = "form-control", @readOnly = true })
+                @Html.ValidationMessage("iidEmpleado", new { @class = "text-danger" })
+            </div>
+
             <div>
                 @Html.LabelFor(p => p.nombre)
                 @Html.TextBoxFor(p => p.nombre, new { @class = "form-control" })
@@ -61,7 +67,33 @@
                 @Html.DropDownList("iidSexo", listaSexo, null, new { @class = "form-control" })
                 @Html.ValidationMessage("iidSexo", new { @class = "text-danger" })
             </div>
-            <input type="submit" value="Enviar" class="btn btn-primary" />
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Guardar
+            </button>
+            @Html.ActionLink("Regresar", "Index", "Empleado", null, new { @class = "btn btn-danger" })
         }
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">¿Desea guardar los cambios?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div style="padding:1em">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="Editar()" class="btn btn-info">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Editar() {
+        var frmEmpleado = document.getElementById("frmEmpleado");
+        frmEmpleado.submit();
+    }
+</script>
