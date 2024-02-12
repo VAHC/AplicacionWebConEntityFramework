@@ -39,5 +39,9 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Models
         [Required]
         public DateTime fechaApertura { get; set; }
         public int bhabilitado { get; set; }
+
+        // AÑADO UNA PROPIEDAD (ERRORES DE VALIDADCIÓN)
+
+        public string mensajeError { get; set; }
     }
 }

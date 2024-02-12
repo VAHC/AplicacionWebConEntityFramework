@@ -28,9 +28,21 @@
             <td>@item.email</td>
             <td>
                 @Html.ActionLink("Editar", "Editar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Eliminar", "Eliminar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Eliminar", "Eliminar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "btn btn-danger", @onclick = "eliminarSucursal()" })
             </td>
         </tr>
             }
     </tbody>
 </table>
+
+<script>
+    function eliminarSucursal() {
+        if (confirm("¿Desea eliminar el registro realmente?") == 1) {
+            //Pone Si
+            alert("Se elimino correctamente");
+        } else {
+            //Pone No
+            event.preventDefault();
+        }
+    }
+</script>

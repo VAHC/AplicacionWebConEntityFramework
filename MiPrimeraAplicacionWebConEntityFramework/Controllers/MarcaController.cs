@@ -47,8 +47,17 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         [HttpPost]
         public ActionResult Editar(MarcaCLS oMarcaCLS)
         {
-            if (!ModelState.IsValid)
+            int nregistrosEncontrados = 0;
+            string nombreMarca = oMarcaCLS.nombre;
+            int iidmarca = oMarcaCLS.iidmarca;
+            using (var bd = new BDPasajeEntities())
             {
+                nregistrosEncontrados = bd.Marca.Where(p => p.NOMBRE.Equals(nombreMarca) && !p.IIDMARCA.Equals(iidmarca)).Count();
+            }
+
+            if (!ModelState.IsValid || nregistrosEncontrados >= 1)
+            {
+                if (nregistrosEncontrados >= 1) oMarcaCLS.mensajeError = "Ya se encuentra registrada la marca";
                 return View(oMarcaCLS);
             }
             
@@ -69,8 +78,16 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         [HttpPost]
         public ActionResult Agregar(MarcaCLS oMarcaCLS)
         {
-            if (!ModelState.IsValid)
+            int nregistrosEncontrados = 0;
+            string nombreMarca = oMarcaCLS.nombre;
+            using (var bd = new BDPasajeEntities())
             {
+                nregistrosEncontrados = bd.Marca.Where(p => p.NOMBRE.Equals(nombreMarca)).Count();
+            }
+            /////////////////////////////////
+            if (!ModelState.IsValid || nregistrosEncontrados  >= 1)
+            {
+                if (nregistrosEncontrados >= 1) oMarcaCLS.mensajeError = "El nombre Marca ya existe";
                 return View(oMarcaCLS);
             }
             else
@@ -86,6 +103,17 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
                 }
             }
 
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Eliminar(int uf)
+        {
+            using(var bd=new BDPasajeEntities())
+            {
+                Marca oMarca = bd.Marca.Where(p => p.IIDMARCA.Equals(uf)).First();
+                oMarca.BHABILITADO = 0;
+                bd.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
     }

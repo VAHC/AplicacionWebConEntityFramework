@@ -26,9 +26,21 @@
             <td>@item.descripcion</td>
             <td>
                 @Html.ActionLink("Editar", "Editar", "Marca", new { uf = @item.iidmarca }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Eliminar", "Eliminar", "Marca", new { uf = @item.iidmarca }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Eliminar", "Eliminar", "Marca", new { uf = @item.iidmarca }, new { @class = "btn btn-danger", @onclick = "eliminar()" })
             </td>
         </tr>
         }
     </tbody>
 </table>
+
+<script>
+    function eliminar() {
+        if (confirm("¿Desea eliminar el registro realmente?") == 1) {
+            //Pone Si
+            alert("Se elimino correctamente");
+        } else {
+            //Pone No
+            event.preventDefault();
+        }
+    }
+</script>
