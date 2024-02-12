@@ -6,13 +6,13 @@
 
 <h2>Index</h2>
 
-@Html.ActionLink("Agregar", "Agregar", "Cliente", null, new {@class="btn btn-primary"})
+@Html.ActionLink("Agregar", "Agregar", "Cliente", null, new { @class = "btn btn-primary" })
 
 <table class="table table-bordered table-hover">
 
     <thead>
         <tr>
-            <td>@Html.LabelFor(p=>Model[0].iidcliente)</td>
+            <td>@Html.LabelFor(p => Model[0].iidcliente)</td>
             <td>@Html.LabelFor(p => Model[0].nombre)</td>
             <td>@Html.LabelFor(p => Model[0].apPaterno)</td>
             <td>@Html.LabelFor(p => Model[0].apMaterno)</td>
@@ -21,19 +21,57 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var item in Model)
-            {
-        <tr>
-            <td>@item.iidcliente</td>
-            <td>@item.nombre</td>
-            <td>@item.apPaterno</td>
-            <td>@item.apMaterno</td>
-            <td>@item.telefonoFijo</td>
-            <td>
-                @Html.ActionLink("Editar", "Editar", "Cliente", new { ad = @item.iidcliente }, new { @class = "btn btn-primary" }) 
-                @Html.ActionLink("Eliminar", "Eliminar", "Cliente", new { ad = @item.iidcliente }, new { @class = "btn btn-danger" })
-            </td>
-        </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.iidcliente</td>
+                <td>@item.nombre</td>
+                <td>@item.apPaterno</td>
+                <td>@item.apMaterno</td>
+                <td>@item.telefonoFijo</td>
+                <td>
+                    @Html.ActionLink("Editar", "Editar", "Cliente", new { ad = @item.iidcliente }, new { @class = "btn btn-primary" })
+                    @*@Html.ActionLink("Eliminar", "Eliminar", "Cliente", new { ad = @item.iidcliente }, new { @class = "btn btn-danger" })*@
+                    <button type="button" onclick="mostrarPopup(@item.iidcliente)" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Eliminar
+                    </button>
+                    
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@using (Html.BeginForm("Eliminar", "Cliente", FormMethod.Post, new { @id = "frmEliminar" }))
+            {
+                @Html.Hidden("iidcliente");
+            }
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">¿Desea guardar los cambios?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div style="padding:1em">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="Agregar()" class="btn btn-info">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function mostrarPopup(iidcliente) {
+        document.getElementById("iidcliente").value = iidcliente;
+    }
+
+    function Agregar() {
+        var frmEliminar = document.getElementById("frmEliminar");
+        frmEliminar.submit();
+    }
+        
+</script>

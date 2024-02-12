@@ -22,18 +22,30 @@
                 @Html.LabelFor(p => p.nombre)
                 @Html.TextBoxFor(p => p.nombre, new { @class = "form-control" })
                 @Html.ValidationMessage("nombre", new { @class = "text-danger" })
+                @if (Model != null && Model.mensajeError != null)
+                {
+                    @Html.Label(Model.mensajeError, new { @class = "text-danger" })
+                }
             </div>
 
             <div>
                 @Html.LabelFor(p => p.apPaterno)
                 @Html.TextBoxFor(p => p.apPaterno, new { @class = "form-control" })
                 @Html.ValidationMessage("apPaterno", new { @class = "text-danger" })
+                @if (Model != null && Model.mensajeError != null)
+                {
+                    @Html.Label(Model.mensajeError, new { @class = "text-danger" })
+                }
             </div>
 
             <div>
                 @Html.LabelFor(p => p.apMaterno)
                 @Html.TextBoxFor(p => p.apMaterno, new { @class = "form-control" })
                 @Html.ValidationMessage("apMaterno", new { @class = "text-danger" })
+                @if (Model != null && Model.mensajeError != null)
+                {
+                    @Html.Label(Model.mensajeError, new { @class = "text-danger" })
+                }
             </div>
 
             <div>

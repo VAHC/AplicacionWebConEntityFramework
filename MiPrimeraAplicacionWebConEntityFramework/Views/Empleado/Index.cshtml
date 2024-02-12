@@ -30,9 +30,45 @@
                 <td>@item.nombreTipoContrato</td>
                 <td>
                     @Html.ActionLink("Editar", "Editar", "Empleado", new { od = @item.iidEmpleado }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Eliminar", "Eliminar", "Empleado", new { od = @item.iidEmpleado }, new { @class = "btn btn-danger" })
+                    <button type="button" onclick="mostrarPopup(@item.iidEmpleado)" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Eliminar
+                    </button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">¿Desea guardar los cambios?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div style="padding:1em">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="Agregar()" class="btn btn-info">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Eliminar", "Empleado", FormMethod.Post, new { @id = "frmEmpleado" }))
+{
+    @Html.Hidden("txtIdEmpleado");
+}
+
+<script>
+    function mostrarPopup(idEmpleado) {
+        document.getElementById("txtIdEmpleado").value = idEmpleado;
+    }
+
+    function Agregar() {
+        var frmEmpleado = document.getElementById("frmEmpleado");
+        frmEmpleado.submit();
+    }
+
+</script>

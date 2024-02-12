@@ -66,5 +66,7 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Models
 
         [Display(Name = "Nombre Modelo")]
         public string nombreModelo { get; set; }
+
+        public string mensajeError { get; set; }
     }
 }

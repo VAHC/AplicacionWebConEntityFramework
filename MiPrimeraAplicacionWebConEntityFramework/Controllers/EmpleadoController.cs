@@ -102,8 +102,18 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         [HttpPost]
         public ActionResult Agregar(EmpleadoCLS oEmpleadoCLS)
         {
-            if (!ModelState.IsValid)
+            int nregistrosAfectados = 0;
+            string nombre = oEmpleadoCLS.nombre;
+            string apPaterno = oEmpleadoCLS.apPaterno;
+            string apMaterno = oEmpleadoCLS.apMaterno;
+
+            using (var bd = new BDPasajeEntities())
             {
+                nregistrosAfectados = bd.Empleado.Where(p => p.NOMBRE.Equals(nombre) && p.APPATERNO.Equals(apPaterno) && p.APMATERNO.Equals(apMaterno)).Count();
+            }
+            if (!ModelState.IsValid || nregistrosAfectados >= 1)
+            {
+                if (nregistrosAfectados >= 1) oEmpleadoCLS.mensajeError = "Ya existe el Empleado registrado";
                 listarCombos();
                 return View(oEmpleadoCLS);
             }
@@ -150,10 +160,21 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         [HttpPost]
         public ActionResult Editar(EmpleadoCLS oEmpleadoCLS)
         {
+            int nregistrosAfectados = 0;
             int idEmpleado = oEmpleadoCLS.iidEmpleado;
+            string nombre = oEmpleadoCLS.nombre;
+            string apPaterno = oEmpleadoCLS.apPaterno;
+            string apMaterno = oEmpleadoCLS.apMaterno;
 
-            if (!ModelState.IsValid)
+            using (var bd = new BDPasajeEntities())
             {
+                nregistrosAfectados = bd.Empleado.Where(p => p.NOMBRE.Equals(nombre) && p.APPATERNO.Equals(apPaterno) && p.APMATERNO.Equals(apMaterno) && !p.IIDEMPLEADO.Equals(idEmpleado)).Count();
+            }
+
+            if (!ModelState.IsValid || nregistrosAfectados >= 1)
+            {
+                if (nregistrosAfectados >= 1) oEmpleadoCLS.mensajeError = "Ya existe el Empleado";
+                listarCombos();
                 return View(oEmpleadoCLS);
             }
 
@@ -169,6 +190,18 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
                 oEmpleado.IIDTIPOUSUARIO = oEmpleadoCLS.iidTipoUsuario;
                 oEmpleado.IIDSEXO = oEmpleadoCLS.iidSexo;
 
+                bd.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Eliminar(int txtIdEmpleado)
+        {
+            using (var bd = new BDPasajeEntities())
+            {
+                Empleado emp = bd.Empleado.Where(p => p.IIDEMPLEADO.Equals(txtIdEmpleado)).First();
+                emp.BHABILITADO = 0;
                 bd.SaveChanges();
             }
             return RedirectToAction("Index");

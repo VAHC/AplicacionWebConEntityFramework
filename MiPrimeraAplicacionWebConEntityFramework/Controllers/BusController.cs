@@ -96,8 +96,16 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         [HttpPost]
         public ActionResult Agregar(BusCLS oBusCLS)
         {
-            if (!ModelState.IsValid)
+            int nregistrosEncontrados = 0;
+            string placa = oBusCLS.placa;
+
+            using(var bd=new BDPasajeEntities())
             {
+                nregistrosEncontrados = bd.Bus.Where(p => p.PLACA.Equals(placa)).Count();
+            }
+            if (!ModelState.IsValid || nregistrosEncontrados >= 1)
+            {
+                if (nregistrosEncontrados >= 1) oBusCLS.mensajeError = "Ya existe el Bus";
                 listarCombos();
                 return View(oBusCLS);
             }
@@ -127,8 +135,18 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         public ActionResult Editar(BusCLS oBusCLS)
         {
             int idBus = oBusCLS.iidBus;
-            if (!ModelState.IsValid)
+            int nregistrosEncontrados = 0;
+            string placa = oBusCLS.placa;
+
+            using (var bd = new BDPasajeEntities())
             {
+                nregistrosEncontrados = bd.Bus.Where(p => p.PLACA.Equals(placa) && !p.IIDBUS.Equals(idBus)).Count();
+            }
+            
+            if (!ModelState.IsValid || nregistrosEncontrados >= 1)
+            {
+                if (nregistrosEncontrados >= 1) oBusCLS.mensajeError = "El Bus ya existe";
+                listarCombos();
                 return View(oBusCLS);
             }
             using(var bd=new BDPasajeEntities())
@@ -202,6 +220,18 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
             }
 
             return View(listaBus);
+        }
+
+        [HttpPost]
+        public ActionResult Eliminar(int iidBus)
+        {
+            using (var bd = new BDPasajeEntities())
+            {
+                Bus oBus = bd.Bus.Where(p => p.IIDBUS.Equals(iidBus)).First();
+                oBus.BHABILITADO = 0;
+                bd.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
     }
 }

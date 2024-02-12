@@ -55,9 +55,20 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         public ActionResult Editar(ClienteCLS oClienteCLS)
         {
             int idCliente = oClienteCLS.iidcliente;
+            int nregistrosEncontrados = 0;
+            string nombre = oClienteCLS.nombre;
+            string aPaterno = oClienteCLS.apPaterno;
+            string aMaterno = oClienteCLS.apMaterno;
 
-            if (!ModelState.IsValid)
+            using (var bd = new BDPasajeEntities())
             {
+                nregistrosEncontrados = bd.Cliente.Where(p => p.NOMBRE.Equals(nombre) && p.APPATERNO.Equals(aPaterno) && p.APMATERNO.Equals(aMaterno) && !p.IIDCLIENTE.Equals(idCliente)).Count();
+            }
+
+            if (!ModelState.IsValid || nregistrosEncontrados >= 1)
+            {
+                if (nregistrosEncontrados >= 1) oClienteCLS.mensajeError = "Ya existe el Cliente";
+                llenarSexo();
                 return View(oClienteCLS);
             }
 
@@ -106,8 +117,18 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         [HttpPost]
         public ActionResult Agregar(ClienteCLS oClienteCLS)
         {
-            if (!ModelState.IsValid)
+            int nregistrosEncontrados = 0;
+            string nombre = oClienteCLS.nombre;
+            string aPaterno = oClienteCLS.apPaterno;
+            string aMaterno = oClienteCLS.apMaterno;
+            using (var bd = new BDPasajeEntities())
             {
+                nregistrosEncontrados = bd.Cliente.Where(p => p.NOMBRE.Equals(nombre) && p.APPATERNO.Equals(aPaterno) && p.APMATERNO.Equals(aMaterno)).Count();
+            }
+
+            if (!ModelState.IsValid || nregistrosEncontrados >= 1)
+            {
+                if (nregistrosEncontrados >= 1) oClienteCLS.mensajeError = "Ya existe el cliente registrado";
                 llenarSexo();
                 ViewBag.lista = listaSexo;
                 return View(oClienteCLS);
@@ -130,5 +151,15 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Eliminar(int iidcliente)
+        {
+            using(var bd= new BDPasajeEntities())
+            {
+                Cliente oCliente = bd.Cliente.Where(p => p.IIDCLIENTE.Equals(iidcliente)).First();
+                oCliente.BHABILITADO = 0;
+                bd.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
