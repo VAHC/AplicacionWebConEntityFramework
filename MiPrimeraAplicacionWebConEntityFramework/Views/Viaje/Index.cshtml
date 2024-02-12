@@ -6,20 +6,29 @@
 
 <h2>Index</h2>
 
+@Html.ActionLink("Agregar", "Agregar", "Viaje", null, new { @class = "btn btn-primary" })
+
+
 <table class="table table-bordered table-hover">
     <tr>
-        <td>@Html.LabelFor(p=>Model[0].iidViaje)</td>
+        <td>@Html.LabelFor(p => Model[0].iidViaje)</td>
         <td>@Html.LabelFor(p => Model[0].nombreLugarOrigen)</td>
         <td>@Html.LabelFor(p => Model[0].nombreLugarDestino)</td>
         <td>@Html.LabelFor(p => Model[0].nombreBus)</td>
+        <td>Operaciones</td>
     </tr>
-    @foreach(var item in Model)
-            {
-                <tr>
-                    <td>@item.iidViaje</td>
-                    <td>@item.nombreLugarOrigen</td>
-                    <td>@item.nombreLugarDestino</td>
-                    <td>@item.nombreBus</td>
-                </tr>
-            }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.iidViaje</td>
+            <td>@item.nombreLugarOrigen</td>
+            <td>@item.nombreLugarDestino</td>
+            <td>@item.nombreBus</td>
+            <td>
+                @Html.ActionLink("Editar", "Editar", "Viaje", new { hd = @item.iidViaje }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Eliminar", "Eliminar", "Viaje", new { hd = @item.iidViaje }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
 </table>
+ 

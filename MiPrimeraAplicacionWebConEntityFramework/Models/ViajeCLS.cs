@@ -21,6 +21,7 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Models
 
         [Display(Name = "Precio")]
         [Required]
+        [Range(0,100000,ErrorMessage ="Rango fuera de indices")]
         public double precio  { get; set; }
 
         [Display(Name = "Fecha de Viaje")]
