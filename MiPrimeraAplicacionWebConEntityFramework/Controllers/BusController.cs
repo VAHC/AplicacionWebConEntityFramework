@@ -98,6 +98,7 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         {
             if (!ModelState.IsValid)
             {
+                listarCombos();
                 return View(oBusCLS);
             }
 
@@ -122,6 +123,33 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult Editar(BusCLS oBusCLS)
+        {
+            int idBus = oBusCLS.iidBus;
+            if (!ModelState.IsValid)
+            {
+                return View(oBusCLS);
+            }
+            using(var bd=new BDPasajeEntities())
+            {
+                Bus oBus = bd.Bus.Where(p => p.IIDBUS.Equals(idBus)).First();
+
+                oBus.IIDSUCURSAL = oBusCLS.iidSucursal;
+                oBus.PLACA = oBusCLS.placa;
+                oBus.FECHACOMPRA = oBusCLS.fechaCompra;
+                oBus.IIDMODELO = oBusCLS.iidModelo;
+                oBus.NUMEROCOLUMNAS = oBusCLS.numeroColumnas;
+                oBus.NUMEROFILAS = oBusCLS.numeroFilas;
+                oBus.DESCRIPCION = oBusCLS.descripcion;
+                oBus.OBSERVACION = oBusCLS.observacion;
+                oBus.IIDMARCA = oBusCLS.iidmarca;
+
+                bd.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Editar(int id)
         {
             BusCLS oBusCLS = new BusCLS();
@@ -140,10 +168,7 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
                 oBusCLS.descripcion = oBus.DESCRIPCION;
                 oBusCLS.observacion = oBus.OBSERVACION;
                 oBusCLS.iidmarca = (int)oBus.IIDMARCA;
-
-
             }
-
             return View(oBusCLS);
         }
 
