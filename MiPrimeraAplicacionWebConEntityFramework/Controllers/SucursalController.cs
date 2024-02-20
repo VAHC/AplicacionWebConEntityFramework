@@ -9,12 +9,15 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
     public class SucursalController : Controller
     {
         // GET: Sucursal
-        public ActionResult Index()
+        public ActionResult Index(SucursalCLS oSucursalCLS)
         {
-            List<SucursalCLS> listaSucursal = null;
+            string nombreSucursal = oSucursalCLS.nombre;
+            List<SucursalCLS> listaSucursal = null; 
             using(var bd= new BDPasajeEntities())
             {
-                listaSucursal = (from sucursal in bd.Sucursal
+                if (oSucursalCLS.nombre == null)
+                {
+                    listaSucursal = (from sucursal in bd.Sucursal
                                  where sucursal.BHABILITADO == 1
                                  select new SucursalCLS
                                  {
@@ -23,6 +26,20 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
                                      telefono = sucursal.TELEFONO,
                                      email = sucursal.EMAIL
                                  }).ToList();
+                }
+                else
+                {
+                    listaSucursal = (from sucursal in bd.Sucursal
+                                     where sucursal.BHABILITADO == 1
+                                     && sucursal.NOMBRE.Contains(nombreSucursal)
+                                     select new SucursalCLS
+                                     {
+                                         iidsucursal = sucursal.IIDSUCURSAL,
+                                         nombre = sucursal.NOMBRE,
+                                         telefono = sucursal.TELEFONO,
+                                         email = sucursal.EMAIL
+                                     }).ToList();
+                }
             }
             return View(listaSucursal);
         }

@@ -7,6 +7,11 @@
 <h2>Index</h2>
 @Html.ActionLink("Agregar", "Agregar", "Marca", null, new { @class = "btn btn-primary" })
 
+@using(Html.BeginForm("Index", "Marca", FormMethod.Post)) { 
+
+@Html.Label("Ingrese nombre Marca")
+@Html.TextBox("nombre")
+<input type="submit" class="btn btn-success" value="Buscar" />
 <table class="table table-bordered table-hover">
 
     <thead>
@@ -32,6 +37,7 @@
         }
     </tbody>
 </table>
+}
 
 <script>
     function eliminar() {

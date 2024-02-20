@@ -9,11 +9,13 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
     public class MarcaController : Controller
     {
         // GET: Marca
-        public ActionResult Index()
+        public ActionResult Index(MarcaCLS omarcaCLS)
         {
+            string nombreMarca = omarcaCLS.nombre;
             List<MarcaCLS> listaMarca = null;
             using (var bd = new BDPasajeEntities())
             {
+                if(omarcaCLS.nombre == null) { 
                 listaMarca = (from marca in bd.Marca
                               where marca.BHABILITADO == 1
                                              select new MarcaCLS
@@ -22,6 +24,19 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
                                                  nombre = marca.NOMBRE,
                                                  descripcion = marca.DESCRIPCION
                                              }).ToList();
+                }
+                else
+                {
+                    listaMarca = (from marca in bd.Marca
+                                  where marca.BHABILITADO == 1
+                                  && marca.NOMBRE.Contains(nombreMarca)
+                                  select new MarcaCLS
+                                  {
+                                      iidmarca = marca.IIDMARCA,
+                                      nombre = marca.NOMBRE,
+                                      descripcion = marca.DESCRIPCION
+                                  }).ToList();
+                }
             }
             return View(listaMarca);
         }
