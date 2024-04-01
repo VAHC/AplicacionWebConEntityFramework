@@ -9,11 +9,16 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
     public class ClienteController : Controller
     {
         // GET: Cliente
-        public ActionResult Index()
+        public ActionResult Index(ClienteCLS oClienteCLS)
         {
             List<ClienteCLS> listaCliente = null;
-            using(var bd= new BDPasajeEntities())
+            int iidsexo = oClienteCLS.iidsexo;
+            llenarSexo();
+            ViewBag.lista = listaSexo;
+
+            using (var bd= new BDPasajeEntities())
             {
+                if(oClienteCLS.iidsexo == 0) { 
                 listaCliente = (from cliente in bd.Cliente
                                 where cliente.BHABILITADO == 1
                                 select new ClienteCLS
@@ -24,6 +29,21 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
                                     apMaterno = cliente.APMATERNO,
                                     telefonoFijo = cliente.TELEFONOFIJO
                                 }).ToList();
+                }
+                else
+                {
+                    listaCliente = (from cliente in bd.Cliente
+                                    where cliente.BHABILITADO == 1
+                                    && cliente.IIDSEXO==iidsexo
+                                    select new ClienteCLS
+                                    {
+                                        iidcliente = cliente.IIDCLIENTE,
+                                        nombre = cliente.NOMBRE,
+                                        apPaterno = cliente.APPATERNO,
+                                        apMaterno = cliente.APMATERNO,
+                                        telefonoFijo = cliente.TELEFONOFIJO
+                                    }).ToList();
+                }
             }
             return View(listaCliente);
         }

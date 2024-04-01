@@ -2,11 +2,19 @@
 @model List<ClienteCLS>
 @{
     ViewBag.Title = "Index";
+    List<SelectListItem> listaSexo = (List<SelectListItem>)ViewBag.lista;
 }
 
 <h2>Index</h2>
 
 @Html.ActionLink("Agregar", "Agregar", "Cliente", null, new { @class = "btn btn-primary" })
+
+@using (Html.BeginForm("Index","Cliente",FormMethod.Get))
+{
+
+@Html.Label("Ingrese sexo del cliente")
+@Html.DropDownList("iidsexo", listaSexo)
+<input type="submit" value="Buscar" class="btn btn-success"/>
 
 <table class="table table-bordered table-hover">
 
@@ -41,6 +49,7 @@
         }
     </tbody>
 </table>
+}
 
 @using (Html.BeginForm("Eliminar", "Cliente", FormMethod.Post, new { @id = "frmEliminar" }))
             {
