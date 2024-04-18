@@ -55,3 +55,23 @@
 
 </table>
 }
+
+<script>
+
+    var iidtipousuario = document.getElementById("iidtipousuario");
+    var nombre = document.getElementById("nombre");
+    var descripcion = document.getElementById("descripcion");
+    var frmBusqueda = document.getElementById("frmBusqueda");
+
+    iidtipousuario.onkeyup = function () {
+        frmBusqueda.submit();
+    }
+    nombre.onkeyup = function () {
+        frmBusqueda.submit();
+    }
+    descripcion.onkeyup = function () {
+        frmBusqueda.submit();
+    }
+
+
+</script>
