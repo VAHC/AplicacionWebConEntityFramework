@@ -1,12 +1,19 @@
 ﻿@using MiPrimeraAplicacionWebConEntityFramework.Models
+<a href="~/Controllers/BusController.cs">~/Controllers/BusController.cs</a>
 @model List<BusCLS>
 @{
     ViewBag.Title = "Index";
+    List<SelectListItem> listaTipoBus = (List<SelectListItem>)ViewBag.listaTipoBus;
+    List<SelectListItem> listaMarca = (List<SelectListItem>)ViewBag.listaMarca;
+    List<SelectListItem> listaModelo = (List<SelectListItem>)ViewBag.listaModelo;
+    List<SelectListItem> listaSucursal = (List<SelectListItem>)ViewBag.listaSucursal;
 }
 
 <h2>Index</h2>
 
 @Html.ActionLink("Agregar", "Agregar", "Bus", new { @class = "btn btn-primary" })
+
+@using(Html.BeginForm("Index", "Bus", FormMethod.Post, new { @id="frmFiltrado"})){
 
 <table class="table table-bordered table-hover">
     <tr>
@@ -16,6 +23,13 @@
         <td>@Html.LabelFor(p => Model[0].nombreSucursal)</td>
         <td>@Html.LabelFor(p => Model[0].nombreTipoBus)</td>
         <td>Operaciones</td>
+    </tr>
+    <tr>
+        <td>@Html.TextBox("iidBus", null, new { @class = "form-control" })</td>
+        <td>@Html.TextBox("placa", null, new { @class = "form-control" })</td>
+        <td>@Html.DropDownList("iidModelo", listaModelo, null, new { @class = "form-control" })</td>
+        <td>@Html.DropDownList("iidSucursal", listaSucursal, null, new { @class = "form-control" })</td>
+        <td>@Html.DropDownList("iidTipoBus", listaTipoBus, null, new { @class = "form-control" })</td>
     </tr>
     @foreach (var item in Model)
     {
@@ -35,7 +49,7 @@
     }
 
 </table>
-
+}
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -59,6 +73,15 @@
 }
 
 <script>
+
+    var frmFiltrado = document.getElementById("frmFiltrado");
+    var controles = document.getElementsByClassName("form-control");
+    var ncontroles = controles.length;
+    for (var i = 0; i < ncontroles; i++) {
+        controles[i].onchange = function () {
+            frmFiltrado.submit();
+        }
+    }
     function mostrarPopup(idBus) {
         document.getElementById("iidBus").value = idBus;
     }

@@ -191,8 +191,10 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
         }
 
         // GET: Bus
-        public ActionResult Index()
+        public ActionResult Index(BusCLS oBusCLS)
         {
+            listarCombos();
+            List<BusCLS> listaRpta = new List<BusCLS>();
             List<BusCLS> listaBus = null;
             using(var bd=new BDPasajeEntities())
             {
@@ -216,10 +218,49 @@ namespace MiPrimeraAplicacionWebConEntityFramework.Controllers
                                 nombreModelo = tipoModelo.NOMBRE,
                                 nombreSucursal = sucursal.NOMBRE,
                                 nombreTipoBus = tipoBus.NOMBRE,
+                                iidModelo = tipoModelo.IIDMODELO,
+                                iidSucursal = sucursal.IIDSUCURSAL,
+                                iidTipoBus = tipoBus.IIDTIPOBUS
                             }).ToList();
+
+                if (oBusCLS.iidBus == 0 && oBusCLS.placa == null
+                    && oBusCLS.iidModelo == 0 && oBusCLS.iidSucursal == 0
+                    && oBusCLS.iidTipoBus == 0) 
+                {
+                    listaRpta = listaBus;
+                }
+                else
+                {
+                    // Filtro por Bus
+                    if(oBusCLS.iidBus != 0)
+                    {
+                        listaBus = listaBus.Where(p => p.iidBus.ToString().Contains(oBusCLS.iidBus.ToString())).ToList();
+                    }
+                    // Filtro por Placa
+                    if (oBusCLS.placa != null)
+                    {
+                        listaBus = listaBus.Where(p => p.placa.Contains(oBusCLS.placa)).ToList();
+                    }
+                    // Filtro por Modelo
+                    if (oBusCLS.iidModelo != 0)
+                    {
+                        listaBus = listaBus.Where(p => p.iidModelo.ToString().Contains(oBusCLS.iidModelo.ToString())).ToList();
+                    }
+                    // Filtro por Sucursal
+                    if (oBusCLS.iidSucursal != 0)
+                    {
+                        listaBus = listaBus.Where(p => p.iidSucursal.ToString().Contains(oBusCLS.iidSucursal.ToString())).ToList();
+                    }
+                    // Filtro por Tipo Bus
+                    if (oBusCLS.iidTipoBus != 0)
+                    {
+                        listaBus = listaBus.Where(p => p.iidTipoBus.ToString().Contains(oBusCLS.iidTipoBus.ToString())).ToList();
+                    }
+                    listaRpta = listaBus;
+                }
             }
 
-            return View(listaBus);
+            return View(listaRpta);
         }
 
         [HttpPost]
