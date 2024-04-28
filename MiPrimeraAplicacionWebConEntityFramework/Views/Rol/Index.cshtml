@@ -6,23 +6,78 @@
 
 <h2>Index</h2>
 
-@using (Ajax.BeginForm("Filtro","",new AjaxOptions
+<button type="button" onclick="Agregar()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Agregar
+</button>
+
+@using (Ajax.BeginForm("Filtro", "", new AjaxOptions
 {
-    HttpMethod="POST",
-    UpdateTargetId="divRol", InsertionMode=InsertionMode.Replace
-}, new { @id="frmFiltro"}))
+    HttpMethod = "POST",
+    UpdateTargetId = "divRol",
+    InsertionMode = InsertionMode.Replace
+}, new { @id = "frmFiltro" }))
 {
-    @Html.Label("Ingrese nombre Rol")
-    @Html.TextBox("nombre", null, new { @class="form-comtrol"})
+    @Html.Label("Ingrese nombre rol")
+    @Html.TextBox("nombre", null, new { @class = "form-control" })
     <div id="divRol">
         @Html.Partial("_TablaRol", Model)
     </div>
 }
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">¿Desea guardar los cambios?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            @using (Ajax.BeginForm("Guardar", "Rol",null, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "Guardar"
+            }))
+            {
+                @Html.Hidden("titulo")
+                <div class="modal-body">
+                    <div>
+                        @Html.Label("Id Rol")
+                        @Html.TextBox("iidRol", null, new { @class = "form-control", @readOnly = true })
+                    </div>
+                    <div>
+                        @Html.Label("Nombre Rol")
+                        @Html.TextBox("nombre", null, new { @class = "form-control" })
+                    </div>
+                    <div>
+                        @Html.Label("Descripción Rol")
+                        @Html.TextBox("descripcion", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div style="padding:1em">
+                    <button type="button" id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" onclick="Agregar()" class="btn btn-info">Aceptar</button>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
 
 <script>
     var nombre = document.getElementById("nombre");
     nombre.onkeyup = function () {
         $("#frmFiltro").trigger("submit");
     }
-
+    function Agregar() {
+        document.getElementById("titulo").value = 1;
+    }
+    function Guardar(resultado) {
+        if (resultado == 1) {
+            $("#frmFiltro").trigger("submit");
+            document.getElementById("btnClose").click();
+            alert("Se guardó correctamente");
+        } else {
+            alert("Ocurrió un error");
+        }
+    }
 </script>
