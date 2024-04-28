@@ -294,6 +294,7 @@
     <Content Include="Views\Viaje\Agregar.cshtml" />
     <Content Include="Views\TipoUsuario\Index.cshtml" />
     <Content Include="Views\Rol\Index.cshtml" />
+    <Content Include="Views\Rol\_TablaRol.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
